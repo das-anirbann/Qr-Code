@@ -20,13 +20,17 @@ function generateQr() {
        qrText.classList.add("error");
        setTimeout(()=>{
             qrText.classList.remove("error");
-       },1500); 
+       },1000); 
     }
 }
 
 function downloadQr(){
-    let link = document.createElement("a");
-    link.href = qrImg.src;
-    link.download = "qr-code.png";
-    link.click();
+    fetch(qrImg.src).then(response => response.blob()).then(blob => {
+ 
+                
+        let link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = "qr-code.png";
+        link.click();
+    });
 }
